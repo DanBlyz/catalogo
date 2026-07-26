@@ -6,18 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->string('name')->nullable();
+            $table->string('nombres')->nullable();
+            $table->string('apellido_paterno')->nullable();
+            $table->string('apellido_materno')->nullable();
+            $table->string('cedula')->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('direccion')->nullable();
+            $table->string('email')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
+            $table->foreignId('rol_id')->nullable()->constrained('roles')->nullOnDelete();
+            $table->foreignId('sucursal_id')->nullable()->constrained('sucursales')->nullOnDelete();
+            $table->boolean('estado')->nullable()->default(true);
             $table->rememberToken();
+            $table->unsignedBigInteger('usuario_creador_id')->nullable();
+            $table->unsignedBigInteger('usuario_modificador_id')->nullable();
+            $table->unsignedBigInteger('usuario_eliminador_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -37,9 +47,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('users');
