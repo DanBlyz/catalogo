@@ -61,22 +61,46 @@
             </ul>
         </div>
 
-        <!-- Grupo Catálogo -->
+        <!-- Grupo Reportes & Ajustes -->
         <div>
             <div x-show="!sidebarCollapsed" class="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
-                Catálogo
+                Sistema
             </div>
             <ul class="space-y-1">
                 <li>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 hover:bg-slate-800/80 hover:text-white text-slate-300">
-                        <i class="fa-solid fa-box text-base w-5 text-center shrink-0 text-brand-400"></i>
-                        <span x-show="!sidebarCollapsed" class="truncate">Productos</span>
+                    <a href="{{ route('administracion.roles') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('administracion.roles') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
+                        <i class="fa-solid fa-user-shield text-base w-5 text-center shrink-0 text-amber-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Roles</span>
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('administracion.sucursales') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('administracion.sucursales') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
+                        <i class="fa-solid fa-store text-base w-5 text-center shrink-0 text-cyan-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Sucursales</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('administracion.permisos') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('administracion.permisos') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
+                        <i class="fa-solid fa-key text-base w-5 text-center shrink-0 text-emerald-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Permisos</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('administracion.usuarios') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('administracion.usuarios') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
+                        <i class="fa-solid fa-user-gear text-base w-5 text-center shrink-0 text-blue-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Usuarios</span>
+                    </a>
+                </li>
+
+                <li>
                     <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 hover:bg-slate-800/80 hover:text-white text-slate-300">
-                        <i class="fa-solid fa-layer-group text-base w-5 text-center shrink-0 text-amber-400"></i>
-                        <span x-show="!sidebarCollapsed" class="truncate">Categorías / Marcas</span>
+                        <i class="fa-solid fa-chart-pie text-base w-5 text-center shrink-0 text-rose-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Reportes</span>
                     </a>
                 </li>
             </ul>
@@ -89,17 +113,53 @@
             </div>
             <ul class="space-y-1">
                 <li>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 hover:bg-slate-800/80 hover:text-white text-slate-300">
+                    <a href="{{ route('persona.clientes') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('persona.clientes') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
                         <i class="fa-solid fa-users text-base w-5 text-center shrink-0 text-emerald-400"></i>
                         <span x-show="!sidebarCollapsed" class="truncate">Clientes</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 hover:bg-slate-800/80 hover:text-white text-slate-300">
+                    <a href="{{ route('persona.proveedores') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('persona.proveedores') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
                         <i class="fa-solid fa-truck-field text-base w-5 text-center shrink-0 text-indigo-400"></i>
                         <span x-show="!sidebarCollapsed" class="truncate">Proveedores</span>
                     </a>
                 </li>
+
+            </ul>
+        </div>
+
+        <!-- Grupo Catálogo -->
+        <div>
+            <div x-show="!sidebarCollapsed" class="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
+                Catálogo
+            </div>
+            <ul class="space-y-1">
+                <li>
+                    <a href="{{ route('catalogo.categorias') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('catalogo.categorias') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
+                        <i class="fa-solid fa-layer-group text-base w-5 text-center shrink-0 text-amber-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Categorías</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('catalogo.marcas') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('catalogo.marcas') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
+                        <i class="fa-solid fa-copyright text-base w-5 text-center shrink-0 text-purple-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Marcas</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('catalogo.productos') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('catalogo.productos') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
+                        <i class="fa-solid fa-box text-base w-5 text-center shrink-0 text-brand-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Productos</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
 
@@ -110,42 +170,33 @@
             </div>
             <ul class="space-y-1">
                 <li>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 hover:bg-slate-800/80 hover:text-white text-slate-300">
+                    <a href="{{ route('operacion.cajas') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('operacion.cajas') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
+                        <i class="fa-solid fa-cash-register text-base w-5 text-center shrink-0 text-emerald-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Cajas</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('operacion.ventas') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('operacion.ventas') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
                         <i class="fa-solid fa-cart-shopping text-base w-5 text-center shrink-0 text-teal-400"></i>
-                        <span x-show="!sidebarCollapsed" class="truncate">Ventas (Egresos)</span>
+                        <span x-show="!sidebarCollapsed" class="truncate">Ventas</span>
                     </a>
                 </li>
+
                 <li>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 hover:bg-slate-800/80 hover:text-white text-slate-300">
-                        <i class="fa-solid fa-store text-base w-5 text-center shrink-0 text-purple-400"></i>
-                        <span x-show="!sidebarCollapsed" class="truncate">Compras (Ingresos)</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 hover:bg-slate-800/80 hover:text-white text-slate-300">
+                    <a href="{{ route('operacion.movimientos') }}" 
+                        class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 {{ request()->routeIs('operacion.movimientos') ? 'bg-brand-600 text-white shadow-lg shadow-brand-600/30 font-semibold' : 'hover:bg-slate-800/80 hover:text-white text-slate-300' }}">
                         <i class="fa-solid fa-arrow-right-arrow-left text-base w-5 text-center shrink-0 text-cyan-400"></i>
                         <span x-show="!sidebarCollapsed" class="truncate">Movimientos (Kardex)</span>
                     </a>
                 </li>
-            </ul>
-        </div>
 
-        <!-- Grupo Reportes & Ajustes -->
-        <div>
-            <div x-show="!sidebarCollapsed" class="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">
-                Sistema
-            </div>
-            <ul class="space-y-1">
                 <li>
                     <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 hover:bg-slate-800/80 hover:text-white text-slate-300">
-                        <i class="fa-solid fa-chart-pie text-base w-5 text-center shrink-0 text-rose-400"></i>
-                        <span x-show="!sidebarCollapsed" class="truncate">Reportes</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all duration-150 hover:bg-slate-800/80 hover:text-white text-slate-300">
-                        <i class="fa-solid fa-user-gear text-base w-5 text-center shrink-0 text-slate-400"></i>
-                        <span x-show="!sidebarCollapsed" class="truncate">Usuarios & Roles</span>
+                        <i class="fa-solid fa-arrow-right-arrow-left text-base w-5 text-center shrink-0 text-cyan-400"></i>
+                        <span x-show="!sidebarCollapsed" class="truncate">Pagos</span>
                     </a>
                 </li>
             </ul>
