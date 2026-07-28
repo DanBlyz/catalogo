@@ -1,0 +1,38 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: catalogo_app
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      APP_NAME: "CATALOGO POS"
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: http://localhost:8080
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: catalogo
+      DB_USERNAME: root
+      DB_PASSWORD: secretpassword
+      RUN_MIGRATIONS: "true"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: catalogo_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: catalogo
+      MYSQL_ROOT_PASSWORD: secretpassword
+    ports:
+      - "33066:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
