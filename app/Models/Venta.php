@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Venta extends Model
 {
-    use HasFactory, SoftDeletes, Auditable;
+    use Auditable, HasFactory, SoftDeletes;
 
     protected $table = 'ventas';
 
@@ -71,5 +71,11 @@ class Venta extends Model
     public function pagos(): HasMany
     {
         return $this->hasMany(Pago::class, 'venta_id');
+    }
+
+    public function movimientos(): HasMany
+    {
+        return $this->hasMany(MovimientoInventario::class, 'referencia_id')
+            ->where('referencia_tipo', 'VENTA');
     }
 }

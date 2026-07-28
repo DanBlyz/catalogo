@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Pago extends Model
 {
-    use HasFactory, SoftDeletes, Auditable;
+    use Auditable, HasFactory, SoftDeletes;
 
     protected $table = 'pagos';
 
@@ -39,5 +39,10 @@ class Pago extends Model
     public function caja(): BelongsTo
     {
         return $this->belongsTo(Caja::class, 'caja_id');
+    }
+
+    public function usuario(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'usuario_creador_id');
     }
 }

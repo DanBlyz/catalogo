@@ -13,8 +13,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-
-    use HasFactory, Notifiable, SoftDeletes, Auditable;
+    use Auditable, HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -61,7 +60,7 @@ class User extends Authenticatable
     public function permisos(): BelongsToMany
     {
         return $this->belongsToMany(Permiso::class, 'permiso_usuario', 'usuario_id', 'permiso_id')
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 
     public function cajas(): HasMany
@@ -81,6 +80,15 @@ class User extends Authenticatable
         }
 
         return $this->permisos()->where('codigo', $codigo)->exists();
+    }
+
+    public function tieneAlgunPermiso(array $codigos): bool
+    {
+        if ($this->esAdmin()) {
+            return true;
+        }
+
+        return $this->permisos()->whereIn('codigo', $codigos)->exists();
     }
 
     public function getNombreCompletoAttribute(): string
