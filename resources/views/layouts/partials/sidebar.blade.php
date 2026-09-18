@@ -29,7 +29,26 @@
     </div>
 
     <!-- Sidebar Navigation Links -->
-    <div class="flex-1 overflow-y-auto px-3 py-4 space-y-6 custom-scrollbar">
+    <div 
+        x-data="{
+            init() {
+                const savedScroll = sessionStorage.getItem('sidebar_scroll_top');
+                if (savedScroll !== null) {
+                    this.$el.scrollTop = parseInt(savedScroll, 10);
+                }
+                this.$nextTick(() => {
+                    const activeItem = this.$el.querySelector('.bg-brand-600');
+                    if (activeItem) {
+                        activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                    }
+                });
+            },
+            saveScroll() {
+                sessionStorage.setItem('sidebar_scroll_top', this.$el.scrollTop);
+            }
+        }"
+        @scroll.passive="saveScroll()"
+        class="flex-1 overflow-y-auto px-3 py-4 space-y-6 custom-scrollbar">
         
         <!-- Grupo Principal -->
         <div>

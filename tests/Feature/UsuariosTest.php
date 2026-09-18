@@ -97,3 +97,21 @@ test('logged in user cannot delete themselves', function () {
         'deleted_at' => null,
     ]);
 });
+
+test('admin can reset user password from modal', function () {
+    $admin = User::factory()->create();
+    $targetUser = User::factory()->create([
+        'password' => Hash::make('oldpassword123'),
+    ]);
+
+    Livewire::actingAs($admin)
+        ->test(Usuarios::class)
+        ->call('openPasswordModal', $targetUser->id)
+        ->set('new_password', 'newsecretpassword123')
+        ->set('new_password_confirmation', 'newsecretpassword123')
+        ->call('updatePassword')
+        ->assertHasNoErrors()
+        ->assertDispatched('swal:modal');
+
+    expect(Hash::check('newsecretpassword123', $targetUser->fresh()->password))->toBeTrue();
+});

@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    /* Estilo de scrollbar delgado y elegante para el Sidebar */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: rgba(51, 65, 85, 0.5); /* slate-700 suave */
+        border-radius: 9999px;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(99, 102, 241, 0.7); /* Indigo/Brand accent al hacer hover */
+    }
+
+    /* Para Firefox */
+    .custom-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(51, 65, 85, 0.5) transparent;
+    }
+}
+

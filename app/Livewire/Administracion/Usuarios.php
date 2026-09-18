@@ -57,6 +57,15 @@ class Usuarios extends Component
 
     public bool $isModalOpen = false;
 
+    // Password reset modal fields
+    public bool $isPasswordModalOpen = false;
+
+    public ?int $passwordUserId = null;
+
+    public string $new_password = '';
+
+    public string $new_password_confirmation = '';
+
     // Permissions modal fields
     public bool $isPermissionsModalOpen = false;
 
@@ -251,6 +260,61 @@ class Usuarios extends Component
         }
     }
 
+    public function openPasswordModal(int $id): void
+    {
+        $user = User::findOrFail($id);
+        $this->passwordUserId = $user->id;
+        $this->new_password = '';
+        $this->new_password_confirmation = '';
+        $this->resetValidation();
+        $this->isPasswordModalOpen = true;
+    }
+
+    public function closePasswordModal(): void
+    {
+        $this->isPasswordModalOpen = false;
+        $this->passwordUserId = null;
+        $this->new_password = '';
+        $this->new_password_confirmation = '';
+        $this->resetValidation();
+    }
+
+    public function updatePassword(): void
+    {
+        $this->validate([
+            'new_password' => 'required|string|min:8|confirmed',
+        ], [
+            'new_password.required' => 'La nueva contraseña es obligatoria.',
+            'new_password.min' => 'La contraseña debe tener al menos 8 caracteres.',
+            'new_password.confirmed' => 'La confirmación de la contraseña no coincide.',
+        ]);
+
+        try {
+            if (! $this->passwordUserId) {
+                return;
+            }
+
+            $user = User::findOrFail($this->passwordUserId);
+            $user->update([
+                'password' => Hash::make($this->new_password),
+            ]);
+
+            $this->closePasswordModal();
+
+            $this->dispatch('swal:modal', [
+                'type' => 'success',
+                'title' => '¡Contraseña Actualizada!',
+                'text' => "La contraseña del usuario '{$user->nombre_completo}' ha sido restablecida correctamente.",
+            ]);
+        } catch (\Exception $e) {
+            $this->dispatch('swal:modal', [
+                'type' => 'error',
+                'title' => 'Ocurrió un error',
+                'text' => $e->getMessage(),
+            ]);
+        }
+    }
+
     public function openPermissionsModal(int $id): void
     {
         $user = User::findOrFail($id);
@@ -332,6 +396,7 @@ class Usuarios extends Component
             'sucursales' => $sucursales,
             'allPermisosGrouped' => $allPermisosGrouped,
             'targetUser' => $this->permissionUserId ? User::find($this->permissionUserId) : null,
+            'passwordTargetUser' => $this->passwordUserId ? User::find($this->passwordUserId) : null,
         ]);
     }
 }

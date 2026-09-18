@@ -163,6 +163,14 @@
                                     <td class="py-3 px-4">
                                         <div class="flex items-center justify-center gap-1">
                                             
+                                            <!-- Cambiar / Resetear Contraseña Button -->
+                                            <button 
+                                                wire:click="openPasswordModal({{ $user->id }})" 
+                                                class="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 transition"
+                                                title="Cambiar / Resetear Contraseña">
+                                                <i class="fa-solid fa-lock text-sm"></i>
+                                            </button>
+
                                             <!-- Permisos Special Access Button -->
                                             <button 
                                                 wire:click="openPermissionsModal({{ $user->id }})" 
@@ -292,7 +300,7 @@
                             <!-- Cédula de Identidad -->
                             <div>
                                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
-                                    Cédula de Identidad (CI)
+                                    Cédula de Identidad (CI) <span class="text-rose-500">*</span>
                                 </label>
                                 <input 
                                     type="text" 
@@ -516,6 +524,95 @@
                             Guardar Permisos
                         </button>
                     </div>
+
+                </div>
+            </div>
+        </div>
+    @endif
+
+    <!-- Reset Password Modal Component -->
+    @if ($isPasswordModalOpen)
+        <div class="fixed inset-0 z-50 overflow-y-auto" x-data="{ open: true }">
+            
+            <!-- Backdrop -->
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" wire:click="closePasswordModal"></div>
+
+            <!-- Modal Content Card -->
+            <div class="flex min-h-full items-center justify-center p-4 text-center">
+                <div class="w-full max-w-md transform overflow-hidden rounded-3xl bg-white dark:bg-slate-900 p-6 text-left align-middle shadow-2xl border border-slate-200 dark:border-slate-800 transition-all space-y-4">
+                    
+                    <!-- Modal Header -->
+                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold text-base shadow-sm">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-bold text-slate-900 dark:text-white">
+                                    Cambiar Contraseña
+                                </h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">
+                                    Usuario: <span class="font-semibold text-slate-800 dark:text-slate-200">{{ $passwordTargetUser?->nombre_completo }}</span>
+                                </p>
+                            </div>
+                        </div>
+                        <button wire:click="closePasswordModal" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition">
+                            <i class="fa-solid fa-xmark text-lg"></i>
+                        </button>
+                    </div>
+
+                    <!-- Modal Body Form -->
+                    <form wire:submit.prevent="updatePassword" class="space-y-4">
+                        
+                        <div class="bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 rounded-xl p-3 text-xs text-indigo-700 dark:text-indigo-300 flex items-start gap-2.5">
+                            <i class="fa-solid fa-circle-info text-indigo-500 text-sm mt-0.5 shrink-0"></i>
+                            <span>Ingresa la nueva contraseña para el usuario. Esta acción restablecerá el acceso a su cuenta inmediatamente.</span>
+                        </div>
+
+                        <!-- Nueva Contraseña -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                                Nueva Contraseña <span class="text-rose-500">*</span>
+                            </label>
+                            <input 
+                                type="password" 
+                                wire:model="new_password" 
+                                placeholder="Mínimo 8 caracteres" 
+                                class="w-full px-3.5 py-2.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
+                            >
+                            @error('new_password') <span class="text-rose-500 text-[11px] mt-1 block">{{ $message }}</span> @enderror
+                        </div>
+
+                        <!-- Confirmar Nueva Contraseña -->
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1.5">
+                                Confirmar Nueva Contraseña <span class="text-rose-500">*</span>
+                            </label>
+                            <input 
+                                type="password" 
+                                wire:model="new_password_confirmation" 
+                                placeholder="Repita la nueva contraseña" 
+                                class="w-full px-3.5 py-2.5 text-xs bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-indigo-500 focus:outline-none transition"
+                            >
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="flex items-center justify-end gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+                            <button 
+                                type="button" 
+                                wire:click="closePasswordModal" 
+                                class="px-4 py-2 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition">
+                                Cancelar
+                            </button>
+                            <button 
+                                type="submit" 
+                                class="px-4 py-2 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-brand-600 hover:from-indigo-500 hover:to-brand-500 rounded-xl shadow-md transition active:scale-[0.98] flex items-center gap-1.5">
+                                <i class="fa-solid fa-key text-xs"></i>
+                                <span>Actualizar Contraseña</span>
+                            </button>
+                        </div>
+
+                    </form>
 
                 </div>
             </div>
