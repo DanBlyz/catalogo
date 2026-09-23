@@ -208,11 +208,13 @@ class Cajas extends Component
 
             // Calculate sales summary
             $ventasEfectivo = (float) Venta::where('caja_id', $caja->id)
-                ->where('metodo_pago', 'EFECTIVO')
+                ->where('estado', '!=', 'ANULADA')
+                ->where('metodo_pago_principal', 'EFECTIVO')
                 ->sum('total');
 
             $ventasDigital = (float) Venta::where('caja_id', $caja->id)
-                ->where('metodo_pago', '!=', 'EFECTIVO')
+                ->where('estado', '!=', 'ANULADA')
+                ->where('metodo_pago_principal', '!=', 'EFECTIVO')
                 ->sum('total');
 
             $montoApertura = (float) $caja->monto_apertura;

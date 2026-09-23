@@ -220,13 +220,13 @@
                                             @endif
 
                                             <!-- Eliminar Button -->
-                                            <button 
+                                            {{-- <button 
                                                 type="button"
                                                 onclick="confirmDeleteCaja({{ $caja->id }})" 
                                                 class="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/50 transition"
                                                 title="Eliminar Registro">
                                                 <i class="fa-solid fa-trash-can text-sm"></i>
-                                            </button>
+                                            </button> --}}
                                         </div>
                                     </td>
                                 </tr>
